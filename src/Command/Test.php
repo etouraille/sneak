@@ -48,13 +48,9 @@ class Test extends Command
     {
         // test du script de backup.
 
-        $float = 1/3 + 1;
-        $float = round($float , 1 );
-        $float = $float . "";
-        if(preg_match('/\./', $float )) {
-            $float .= "0";
-        }
-        var_dump($input->getOption('redo'));
+        $float = 1/3*100;
+        $float = round($float , -1 );
+        var_dump( $float);
         /*
         $mappings = $this->em->getRepository(Mapping::class )->findAll();
         $backs = $this->em->getRepository(\App\Entity\Backup::class)->findAll();
