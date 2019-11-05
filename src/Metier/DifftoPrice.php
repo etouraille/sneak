@@ -68,7 +68,7 @@ class DifftoPrice
             $this->report->addLine(sprintf("Mise a jour de %s prix pour %s", $updated, $productAndVariant['handle']));
             $mapping->setHashOldPriceAndSize( $md5 );
             $this->em->merge($mapping);
-            $this->>em->flush();
+            $this->em->flush();
 
         } else {
             $this->report->addLine("Le produit %s n'est pas traité, pas de variation de prix constatée", $mapping->getShopifyUrl());
@@ -104,7 +104,6 @@ class DifftoPrice
         $size = $match[1];
 
         // title : 12 US - 11.5 UK - 46 2/3 FR
-        dump($title);
         if( !preg_match('/([^ ]*)( |)US/i', $title, $match )) {
             throw new \Exception( 'Problème de match 2');
         }

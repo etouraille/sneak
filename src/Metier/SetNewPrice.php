@@ -33,7 +33,7 @@ class SetNewPrice
 
             if( isset($variant['newPrice'])) {
 
-                $delta = $variant['newPrice'] - $variant['price'];
+                $delta = (float) $variant['newPrice'] - (float) $variant['price'];
                 $n ++;
 
                 $response = VariantSetter::set([
@@ -47,7 +47,7 @@ class SetNewPrice
                 $this->report->addLine(sprintf('Mise à jour pour %s,%s de %s Euros à %s Euros', $productAndVariant['handle'], $variant['title'], $variant['price'], $variant['newPrice']));
             }
         }
-        $this->report->addLine(sprintf("Mise a jour des prix du produit %s pur une % en moyenne de %s \%", $productAndVariant['handle'], $delta > 0? 'augmentation' : 'diminution', $delta / $n ));
+        $this->report->addLine(sprintf("Mise a jour des prix du produit %s pur une %s en moyenne de %s %%", $productAndVariant['handle'], $delta > 0? 'augmentation' : 'diminution', $delta / $n ));
         return null;
     }
 }
