@@ -6,3 +6,4 @@ RUN npm install -g phantomjs
 
 RUN apt-get install -y iputils-ping
 
+RUN apt-get install at
