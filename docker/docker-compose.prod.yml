@@ -33,7 +33,7 @@ services:
       environment:
         - WEB_DOCUMENT_ROOT=/src/public
       ports:
-        - "80:80"
+        - "81:80"
       labels:
       - "traefik.enable=true"
       - "traefik.http.routers.php.rule=Host(`stockx.sneakers-heat.com`)"
