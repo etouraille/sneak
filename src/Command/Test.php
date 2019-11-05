@@ -16,6 +16,7 @@ use App\Metier\VariantSetter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Test extends Command
@@ -32,7 +33,15 @@ class Test extends Command
 
     protected function configure()
     {
-
+        $this
+            ->addOption(
+                'redo',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Redo hash',
+                1
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,7 +54,7 @@ class Test extends Command
         if(preg_match('/\./', $float )) {
             $float .= "0";
         }
-        var_dump($float);
+        var_dump($input->getOption('redo'));
         /*
         $mappings = $this->em->getRepository(Mapping::class )->findAll();
         $backs = $this->em->getRepository(\App\Entity\Backup::class)->findAll();

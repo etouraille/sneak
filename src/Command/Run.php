@@ -104,22 +104,26 @@ class Run extends Command
         $t1 = time();
         $this->report->addLine(sprintf("Mise à jour réalisée en %s secondes", $t1-$t0));
 
-        $message = (new \Swift_Message('Rapport de mise à jour des prix'))
+        if(1 === $input->getOption('redo')) {
+
+            $message = (new \Swift_Message('Rapport de mise à jour des prix'))
             ->setFrom('report@sneaker.com')
             ->setTo('edouard.touraille@gmail.com')
             ->setCc('edouard.touraille@gmail.com')
             ->setBody(
                 $this->report->exportHTML(),
                 'text/html'
-            )
+                )
 
             // you can remove the following code if you don't define a text version for your emails
             ->addPart(
                 $this->report->export(),
                 'text/plain'
-            )
-        ;
-        $this->mailer->send( $message );
+                )
+            ;
+            // on n'envoie le mail que lors du premier lancement.
+            $this->mailer->send($message);
+        }
         if(count($abort) > 0 ) {
             $at = new At(sprintf("/src/bin/console run --redo=%s", $redoHash), "now + 1 min");
             $at->run();
