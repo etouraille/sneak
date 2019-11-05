@@ -38,6 +38,15 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // test du script de backup.
+
+        $float = 1/3 + 1;
+        $float = round($float , 1 );
+        $float = $float . "";
+        if(preg_match('/\./', $float )) {
+            $float .= "0";
+        }
+        var_dump($float);
+        /*
         $mappings = $this->em->getRepository(Mapping::class )->findAll();
         $backs = $this->em->getRepository(\App\Entity\Backup::class)->findAll();
         $first = [];
@@ -72,7 +81,7 @@ class Test extends Command
 
         foreach( $p as $product ) {
             foreach( $product['variants'] as $variant ) {
-                /*
+
                 $response = VariantSetter::set([
                     'variant' => [
                         'id' => $variant['id'],
@@ -81,9 +90,9 @@ class Test extends Command
                 ]);
 
                 var_dump($response);
-                */
+
             }
-        }
+        }*/
 
 
 

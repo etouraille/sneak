@@ -16,7 +16,11 @@ class Rate
         $x = 1.35 * $value + 15;
         $y = 1.26 * $x;
         $ret = $y;
-        $ret = round( $ret, 2);
+        $ret = round( $ret, 1);
+        $ret .= "";
+        if( preg_match('/\./', $ret ) ) {
+            $ret .= "0";
+        }
         return $ret;
     }
 }
