@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Mapping;
 use App\Form\MappingType;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,9 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('default');
         }
 
+        $pagination = new Pagination(6, $n);
+        $pagination->page( $page );
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'form' => $form->createView(),
@@ -45,7 +49,8 @@ class DefaultController extends AbstractController
             'pages' => $this->getPagination($em),
             'id' => false,
             'n' => $n,
-            'current' => $current
+            'current' => $current,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -71,6 +76,9 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('default');
         }
 
+        $pagination = new Pagination(6, $n);
+        $pagination->page( $page );
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'form' => $form->createView(),
@@ -79,6 +87,7 @@ class DefaultController extends AbstractController
             'id' => $id,
             'n' => $n,
             'current' => $current,
+            'pagination' => $pagination,
         ]);
 
 

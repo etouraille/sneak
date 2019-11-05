@@ -24,9 +24,9 @@ html,body{
 
 .white-board{
     width: 100%;
-    padding: 5em;
+    padding: 2em;
     background-color: white !important;
-    height: 92%;
+    height: 100%;
 }
 
 .social_icon span{

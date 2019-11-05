@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Correspondance entre stockx et sneakers-heat{% endblock %}
 
 {% block body %}
     <div class="white-board">
         <form method="POST" action="/{% if id %}edit/{{ id }}{% endif %}">
             {{ form_widget(form) }}
-            <input type="submit" class="btn btn-danger" value="valider" />
+            <input type="submit" class="btn btn-success" value="Enregistrer" />
         </form>
         <table class="table">
             <tr>
+                <th>Index</th>
                 <th>Shopify Url</th>
                 <th>Stockx Url </th>
                 <th>Modifier</th>
@@ -17,21 +18,27 @@
             </tr>
             {% for mapping in mappings %}
                 <tr>
+                    <td>{{ mapping.id }}</td>
                     <td>{{ mapping.ShopifyUrl }}</td>
                     <td>{{ mapping.StockxUrl }}</td>
-                    <td><a href="/edit/{{ mapping.id }}">Modifier</a></td>
-                    <td><a href="/delete/{{ mapping.id }}">Supprimer</a></td>
+                    <td><a class="btn btn-success" href="/edit/{{ mapping.id }}">Modifier</a></td>
+                    <td><a class="btn btn-danger confirm" href="/delete/{{ mapping.id }}">Supprimer</a></td>
                 </tr>
             {% endfor %}
         </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                {% for page in pages %}
-
-                <li class="page-item {% if page == current %}active{% endif %}"><a class="page-link" href="/page/{{ page }}">{{ page }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
-        <nav>Total {{ n }} entrées</nav>
+        {{ pagination | raw }}
     </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(function() {
+        console.log('confirm');
+        $('.confirm').click(function(e) {
+            e.preventDefault();
+            if (window.confirm("Are you sure?")) {
+                location.href = this.href;
+            }
+        });
+    });
+</script>
 {% endblock %}
