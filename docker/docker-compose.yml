@@ -38,4 +38,3 @@ services:
       - MYSQL_PORT_3306_TCP_ADDR=db
      links:
       - db:mysql
-x
