@@ -1,4 +1,7 @@
 {
+    "curl/curl": {
+        "version": "2.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -93,11 +96,26 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
+    "fabpot/goutte": {
+        "version": "v3.2.3"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.4.1"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "jonnyw/php-phantomjs": {
+        "version": "v2.0.1"
     },
     "monolog/monolog": {
         "version": "1.25.1"
@@ -126,11 +144,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
     "psr/log": {
         "version": "1.1.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

@@ -1,0 +1,8 @@
+monolog:
+  channels: ['shopify']
+  handlers:
+    shopify:
+      type: stream
+      path: "%kernel.logs_dir%/shopify.%kernel.environment%.log"
+      level: info
+      channels: ["shopify"]

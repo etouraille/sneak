@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <div class="white-board">
+        <form method="POST" action="/{% if id %}edit/{{ id }}{% endif %}">
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-danger" value="valider" />
+        </form>
+        <table class="table">
+            <tr>
+                <th>Shopify Url</th>
+                <th>Stockx Url </th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+            {% for mapping in mappings %}
+                <tr>
+                    <td>{{ mapping.ShopifyUrl }}</td>
+                    <td>{{ mapping.StockxUrl }}</td>
+                    <td><a href="/edit/{{ mapping.id }}">Modifier</a></td>
+                    <td><a href="/delete/{{ mapping.id }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% for page in pages %}
+
+                <li class="page-item {% if page == current %}active{% endif %}"><a class="page-link" href="/page/{{ page }}">{{ page }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <nav>Total {{ n }} entrées</nav>
+    </div>
+{% endblock %}
