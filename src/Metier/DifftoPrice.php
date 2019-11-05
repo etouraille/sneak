@@ -64,11 +64,11 @@ class DifftoPrice
                 $this->report->addLine(sprintf("Aucun variant pour %s", $productAndVariant['handle']), true );
             }
             $this->integrity->check($productAndVariant);
-            // $this->priceSetter->set($productAndVariant);
-            // $this->report->addLine(sprintf("Mise a jour de %s prix pour %s", $updated, $productAndVariant['handle']));
-            // $mapping->setHashOldPriceAndSize( $md5 );
-            // $this->em->merge($mapping);
-            // $this->>em->flush();
+            $this->priceSetter->set($productAndVariant);
+            $this->report->addLine(sprintf("Mise a jour de %s prix pour %s", $updated, $productAndVariant['handle']));
+            $mapping->setHashOldPriceAndSize( $md5 );
+            $this->em->merge($mapping);
+            $this->>em->flush();
 
         } else {
             $this->report->addLine("Le produit %s n'est pas traité, pas de variation de prix constatée", $mapping->getShopifyUrl());

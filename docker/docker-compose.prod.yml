@@ -1,6 +1,6 @@
 version: '3'
 services:
-  php:
+ php:
       build: php
       volumes:
           - ./../.:/src
@@ -13,15 +13,15 @@ services:
         - "81:80"
       container_name: "php"
       labels:
-      - "traefik.backend=back"
-      - "traefik.frontend.rule=Host:stockx.sneakers-heat.com"
-      - "traefik.enable=true"
-      - "traefik.port=80"
-      - "traefik.docker.network=web"
+       - "traefik.backend=back"
+       - "traefik.frontend.rule=Host:stockx.sneakers-heat.com"
+       - "traefik.enable=true"
+       - "traefik.port=80"
+       - "traefik.docker.network=web"
       networks:
-      - "web"
-      - "default"
-  db:
+       - "web"
+       - "default"
+ db:
     image: mariadb
     restart: always
     ports:
@@ -37,7 +37,7 @@ services:
       - ./:/opt
     tty: true
 
-  phpmyadmin:
+ phpmyadmin:
      image: corbinu/docker-phpmyadmin
      restart: always
      ports :
@@ -48,12 +48,15 @@ services:
       - MYSQL_PORT_3306_TCP_ADDR=db
      links:
       - db:mysql
-     #labels:
-     #- "traefik.enable=true"
-     #- "traefik.http.routers.php.rule=Host(`stockx.sneakers-heat.com`)"
-     #- "traefik.http.routers.php.entrypoints=websecure"
-     #- "traefik.http.routers.php.tls.certresolver=myhttpchallenge"
-
+     labels:
+      - "traefik.backend=db"
+      - "traefik.frontend.rule=Host:db.sneakers-heat.com"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.docker.network=web"
+     networks:
+      - "web"
+      - "default"
 
 networks:
   web:
