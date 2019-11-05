@@ -42,7 +42,6 @@ class SetNewPrice
                         'price' => $variant['newPrice']
                     ]
                 ]);
-                var_dump( $response );
                 $this->logger->info(sprintf ("For %s : Response %s", $productAndVariant['handle'], $response));
                 $this->report->addLine(sprintf('Mise à jour pour %s,%s de %s Euros à %s Euros', $productAndVariant['handle'], $variant['title'], $variant['price'], $variant['newPrice']));
             }

@@ -71,7 +71,7 @@ class DifftoPrice
             $this->em->flush();
 
         } else {
-            $this->report->addLine("Le produit %s n'est pas traité, pas de variation de prix constatée", $mapping->getShopifyUrl());
+            $this->report->addLine(sprintf("Le produit %s n'est pas traité, pas de variation de prix constatée", $mapping->getShopifyUrl()));
         }
     }
 
