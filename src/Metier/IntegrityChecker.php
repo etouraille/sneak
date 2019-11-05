@@ -30,7 +30,7 @@ class IntegrityChecker
         $mean = $mean / $n;
 
         if($mean >= 0.2) $this->report->addLine(sprintf("La variation moyenne du prix est superieur à 20 %% pour %s", $productAndVariant['handle']));
-        if($mean >= 1) $this->report->addLine(sprintf("La variation moyenne du prix est superieur à 100 %% pour %s", $productAndVariant['handle']), true );
+        if($mean >= 1) $this->report->addLine(sprintf("La variation moyenne du prix est superieur à 100 %% pour %s", $productAndVariant['handle']));
     }
 
     private function delta( $price1, $price2 ) {
