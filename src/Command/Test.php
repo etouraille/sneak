@@ -13,6 +13,7 @@ use App\Metier\Proxy\FreshFactory;
 use App\Metier\Proxy\Load;
 use App\Metier\SizeAndPrice\Parser;
 use App\Metier\VariantSetter;
+use App\Utils\Counter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,10 +48,13 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // test du script de backup.
-
-        $float = 1/3*100;
-        $float = round($float , -1 );
-        var_dump( $float);
+        $counter = new Counter();
+        $counter->increment();
+        $counter->increment();
+        $count2 = new Counter();
+        $count2->increment();
+        $counter->init();
+        dump($count2->read());
         /*
         $mappings = $this->em->getRepository(Mapping::class )->findAll();
         $backs = $this->em->getRepository(\App\Entity\Backup::class)->findAll();

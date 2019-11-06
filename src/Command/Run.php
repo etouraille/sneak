@@ -76,7 +76,8 @@ class Run extends Command
 
         if( isset( $stockUrl ) ) {
 
-            $diffToPrice->make($mapping->one($stockUrl));
+            $diff = $mapping->one($stockUrl);
+            $diffToPrice->make($diff);
 
         } else {
 
@@ -108,8 +109,7 @@ class Run extends Command
 
             $message = (new \Swift_Message('Rapport de mise à jour des prix'))
             ->setFrom('report@sneaker.com')
-            ->setTo('edouard.touraille@gmail.com')
-            ->setCc('edouard.touraille@gmail.com')
+            ->setTo('edouard.touraille@gmail.com', 'snkrsheat@gmail.com')
             ->setBody(
                 $this->report->exportHTML(),
                 'text/html'
@@ -125,7 +125,7 @@ class Run extends Command
             $this->mailer->send($message);
         }
         if(count($abort) > 0 ) {
-            $at = new At(sprintf("/src/bin/console run --redo=%s", $redoHash), "now + 1 min");
+            $at = new At(sprintf("/src/bin/console run --redo=%s", $redoHash), "now + 10 min");
             $at->run();
         }
 

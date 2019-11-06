@@ -13,6 +13,9 @@ use App\Entity\Mapping;
 use App\Entity\Redo;
 use App\Metier\Proxy\FreshFactory;
 use App\Metier\Report\Maker;
+use App\Repository\MappingRepository;
+use App\Utils\Counter;
+use App\Utils\Dollard;
 use Doctrine\ORM\EntityManagerInterface;
 use Goutte\Client;
 
@@ -26,14 +29,22 @@ class MappingToDiff implements \Iterator
     private $current;
     private $mappings = [];
     private $redo = null;
+    private $counter;
 
     public function __construct(EntityManagerInterface $em, Maker $report , $redo = null ) {
         $this->em = $em;
         $this->report = $report;
         $this->proxyFactory = new FreshFactory( $em );
         $this->current = 0;
+        $this->counter = new Counter();
         if( isset( $redo ) && is_string( $redo ) ) {
             $redos = $em->getRepository(Redo::class)->findPending($redo);
+            // cas ou les redos ne sont pas necessaire.
+            $n = $em->getRepository(Mapping::class)->count();
+            if( 2 * abs(count($redos) - (int) $n ) / ( count($redos) + (int) $n )  < 0.05 ) {
+                $redos = [];
+                $this->report->addLine("Le nombre de produit en echec est inférieur à 5%, on les laisse en pending");
+            }
             foreach ( $redos as $redo ) {
                 $this->mappings[] = $em->getRepository(Mapping::class)->find( $redo->getMappingId());
             }
@@ -117,12 +128,13 @@ class MappingToDiff implements \Iterator
         ]);
         $client->setClient($guzzleClient);
         $crawler = $client->request('GET', $url);
+        $this->counter->increment();
         $sizePrice = [];
         $crawler->filter('#market-summary > div.options > div > div > div.select-options > div:nth-child(2) > ul > li.select-option > div')->each(function( $node) use ( &$sizePrice , $url ) {
             if(!preg_match('/([^ ]*)\$(.*)$/',$node->text(), $match )) {
                 if(!preg_match('/Bid/', $node->text())) $this->report->addLine(sprintf ("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url , $node->text()));
             } else {
-                $sizePrice[] = ['size' => $match[1], 'price' => (float)$match[2]];
+                $sizePrice[] = ['size' => $match[1], 'price' => Dollard::removeComa($match[2])];
 
             }
         });

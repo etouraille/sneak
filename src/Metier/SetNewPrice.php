@@ -35,7 +35,6 @@ class SetNewPrice
 
                 $delta = (float) $variant['newPrice'] - (float) $variant['price'];
                 $n ++;
-
                 $response = VariantSetter::set([
                     'variant' => [
                         'id' => $variant['id'],
