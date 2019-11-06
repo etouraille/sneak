@@ -109,7 +109,7 @@ class Run extends Command
 
             $message = (new \Swift_Message('Rapport de mise à jour des prix'))
             ->setFrom('report@sneaker.com')
-            ->setTo('edouard.touraille@gmail.com', 'snkrsheat@gmail.com')
+            ->setTo(['edouard.touraille@gmail.com', 'snkrsheat@gmail.com'])
             ->setBody(
                 $this->report->exportHTML(),
                 'text/html'
