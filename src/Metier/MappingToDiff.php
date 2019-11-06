@@ -41,7 +41,7 @@ class MappingToDiff implements \Iterator
             $redos = $em->getRepository(Redo::class)->findPending($redo);
             // cas ou les redos ne sont pas necessaire.
             $n = $em->getRepository(Mapping::class)->count();
-            if(  abs(count($redos) - (int) $n ) /  $n   > 0.98 ) {
+            if(  abs(count($redos) - (int) $n ) /  $n   > 0.97 ) {
                 $redos = [];
                 $this->report->addLine("Le nombre de produit en echec est inférieur à 5%, on les laisse en pending");
             }
