@@ -26,7 +26,7 @@ class RedoEnd
     public function check( $redo ) {
 
         $periodicData = [];
-        $redos = $this->em->getRepository(Redo::class )->findForPeriodicChecker( $redo );
+        $redos = $this->em->getRepository(Redo::class )->findForPeriodChecker( $redo );
         foreach( $redos as $redo ) {
             $periodicData[] = $redo->getMappingId();
         }
