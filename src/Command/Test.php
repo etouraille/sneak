@@ -9,6 +9,7 @@
 namespace App\Command;
 
 use App\Entity\Mapping;
+use App\Metier\PeriodChecker;
 use App\Metier\Proxy\FreshFactory;
 use App\Metier\Proxy\Load;
 use App\Metier\SizeAndPrice\Parser;
@@ -34,75 +35,14 @@ class Test extends Command
 
     protected function configure()
     {
-        $this
-            ->addOption(
-                'redo',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Redo hash',
-                1
-            )
-        ;
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // test du script de backup.
-        $counter = new Counter();
-        $counter->increment();
-        $counter->increment();
-        $count2 = new Counter();
-        $count2->increment();
-        $counter->init();
-        dump($count2->read());
-        /*
-        $mappings = $this->em->getRepository(Mapping::class )->findAll();
-        $backs = $this->em->getRepository(\App\Entity\Backup::class)->findAll();
-        $first = [];
-        foreach( $mappings as $index => $mapping ) {
-            if($index < 20 ) {
-                $first[] = $mapping;
-            }
-        }
 
-        $p = [];
-
-
-        $datas = [];
-        foreach($backs as $back ) {
-            $datas[] = $back->getData();
-        }
-
-        foreach( $first as $mapping ) {
-            $url = $mapping->getShopifyUrl();
-            preg_match('/\/([^\/]*)$/', $url , $match );
-            foreach($datas as $data ) {
-                $data = json_decode($data, true );
-                foreach( $data['products'] as $product )
-                {
-                    if( $product['handle'] === $match[1]) {
-                        $p[] = $product;
-                    }
-                }
-
-            }
-        }
-
-        foreach( $p as $product ) {
-            foreach( $product['variants'] as $variant ) {
-
-                $response = VariantSetter::set([
-                    'variant' => [
-                        'id' => $variant['id'],
-                        'price'=> $variant['price']
-                    ]
-                ]);
-
-                var_dump($response);
-
-            }
-        }*/
-
+        $res = [1, 2, 3 , 4, 1, 2 , 3];
+        dump(PeriodChecker::check($res));
 
 
     }

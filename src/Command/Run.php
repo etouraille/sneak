@@ -59,16 +59,15 @@ class Run extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $t0 = time();
-        $mapping = new MappingToDiff( $this->em , $this->report );
         $diffToPrice = new DifftoPrice($this->em , $this->report , $this->logger );
 
         $stockUrl = $input->getArgument('stockx');
         $redo = $input->getOption('redo');
         if(isset($redo) && is_string($redo)) {
-            $mapping = new MappingToDiff( $this->em , $this->report, $redo  );
+            $mapping = new MappingToDiff( $this->em , $this->report, $this->mailer, $redo  );
         } else {
 
-            $mapping = new MappingToDiff( $this->em , $this->report );
+            $mapping = new MappingToDiff( $this->em , $this->report , $this->mailer );
         }
 
         $redoHash = (isset( $redo ) && is_string( $redo ))? $redo : md5('redo'.time());
@@ -125,9 +124,8 @@ class Run extends Command
             $this->mailer->send($message);
         }
         if(count($abort) > 0 ) {
-            $at = new At(sprintf("/src/bin/console run --redo=%s", $redoHash), "now + 10 min");
+            $at = new At(sprintf("/src/bin/console run --redo=%s", $redoHash), "now + 1 min");
             $at->run();
         }
-
     }
 }

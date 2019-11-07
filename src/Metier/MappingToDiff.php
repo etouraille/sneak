@@ -31,19 +31,18 @@ class MappingToDiff implements \Iterator
     private $redo = null;
     private $counter;
 
-    public function __construct(EntityManagerInterface $em, Maker $report , $redo = null ) {
+    public function __construct(EntityManagerInterface $em, Maker $report , \Swift_Mailer $mailer, $redo = null ) {
         $this->em = $em;
         $this->report = $report;
         $this->proxyFactory = new FreshFactory( $em );
         $this->current = 0;
         $this->counter = new Counter();
+        $redoEnd = new RedoEnd( $em , $mailer );
         if( isset( $redo ) && is_string( $redo ) ) {
             $redos = $em->getRepository(Redo::class)->findPending($redo);
-            // cas ou les redos ne sont pas necessaire.
-            $n = $em->getRepository(Mapping::class)->count();
-            if(  abs(count($redos) - (int) $n ) /  $n   > 0.97 ) {
+            if( $redoEnd->check( $redo ) ) {
                 $redos = [];
-                $this->report->addLine("Le nombre de produit en echec est inférieur à 5%, on les laisse en pending");
+                $this->report->addLine("Les produits en exception se repètent s");
             }
             foreach ( $redos as $redo ) {
                 $this->mappings[] = $em->getRepository(Mapping::class)->find( $redo->getMappingId());

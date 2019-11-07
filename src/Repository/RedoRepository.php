@@ -31,15 +31,16 @@ class RedoRepository extends ServiceEntityRepository
     }
 
 
-    /*
-    public function findOneBySomeField($value): ?Redo
+
+    public function findForPeriodChecker($batch)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.bacth = :batch')
+            ->setParameter('batch', $batch)
+            ->orderBy('r.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
 }
