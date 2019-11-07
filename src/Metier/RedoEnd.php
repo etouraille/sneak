@@ -9,6 +9,7 @@
 namespace App\Metier;
 
 
+use App\Entity\Mapping;
 use App\Entity\Redo;
 use App\Utils\PeriodChecker;
 use Doctrine\ORM\EntityManagerInterface;
