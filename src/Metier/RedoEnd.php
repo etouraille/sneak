@@ -40,10 +40,10 @@ class RedoEnd
                 $mapping  = $this->em->getRepository(Mapping::class )->find( $id );
                 $content .= sprintf("%s %s<br/>", $mapping->getShopifyUrl(), $mapping->getStockxUrl());
             }
-            //'snkrsheat@gmail.com'
+            //
             $message = (new \Swift_Message('Rapport des produits restés en exception'))
                 ->setFrom('report@sneaker.com')
-                ->setTo(['edouard.touraille@gmail.com'])
+                ->setTo(['edouard.touraille@gmail.com','snkrsheat@gmail.com'])
                 ->setBody(
                     $content,
                     'text/html'
