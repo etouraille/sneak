@@ -35,7 +35,7 @@ class RedoRepository extends ServiceEntityRepository
     public function findForPeriodChecker($batch)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.bacth = :batch')
+            ->andWhere('r.batch = :batch')
             ->setParameter('batch', $batch)
             ->orderBy('r.id', 'ASC')
             ->getQuery()
