@@ -44,8 +44,8 @@
             }
         });
         $('.autocomplete').autocomplete({ select : function(event, ui) { console.log(event ),
-                location.href = 'http://localhost/edit/' + ui['item'].id;
-        }, source : 'http://localhost/app/search'})
+                location.href = '/edit/' + ui['item'].id;
+        }, source : '/app/search'})
     });
 </script>
 {% endblock %}
