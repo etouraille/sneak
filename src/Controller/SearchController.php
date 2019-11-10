@@ -25,6 +25,8 @@ class SearchController extends AbstractController
             $ret[] = ['id' => $mapping->getId(), 'value' => sprintf(' %s %s ', $mapping->getShopifyUrl(), $mapping->getStockxUrl())];
         }
         $response = new JsonResponse( $ret);
+        $response->headers->set('Access-Control-Allow-Origin' , '*');
         return $response;
+
     }
 }
