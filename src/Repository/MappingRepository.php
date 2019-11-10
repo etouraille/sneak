@@ -42,4 +42,17 @@ class MappingRepository extends ServiceEntityRepository
         ;
     }
 
+    public function search( $term ) {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'DESC')
+            ->where('m.id = :term')
+            ->orWhere('m.stockxUrl LIKE :like')
+            ->orWhere('m.shopifyUrl LIKE :like')
+            ->setParameter(':term', $term)
+            ->setParameter(':like', '%'.$term.'%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

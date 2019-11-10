@@ -4,9 +4,13 @@
 
 {% block body %}
     <div class="white-board">
+        <div class="form-group">
+            <input class="autocomplete form-control" placeholder="rechercher" />
+        </div>
         <form method="POST" action="/{% if id %}edit/{{ id }}{% endif %}">
             {{ form_widget(form) }}
             <input type="submit" class="btn btn-success" value="Enregistrer" />
+            {% if id %}<button class="btn btn-danger confirm" data-remove="/delete/{{ id }}">Supprimer</button>{% endif %}
         </form>
         <table class="table">
             <tr>
@@ -32,13 +36,16 @@
 {% block javascripts %}
 <script>
     $(function() {
-        console.log('confirm');
         $('.confirm').click(function(e) {
             e.preventDefault();
             if (window.confirm("Are you sure?")) {
-                location.href = this.href;
+                if(this.dataset.remove) location.href = this.dataset.remove
+                if(this.href) location.href = this.href;
             }
         });
+        $('.autocomplete').autocomplete({ select : function(event, ui) { console.log(event ),
+                location.href = 'http://localhost/edit/' + ui['item'].id;
+        }, source : 'http://localhost/app/search'})
     });
 </script>
 {% endblock %}
