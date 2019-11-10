@@ -51,7 +51,14 @@ class Run extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Redo hash',
                 1
-            );
+            )
+            ->addOption(
+                'no-mail',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Redo hash',
+                1
+            )
         ;
     }
 
@@ -106,9 +113,14 @@ class Run extends Command
 
         if(1 === $input->getOption('redo')) {
 
+            $dest = ['edouard.touraille@gmail.com'];
+            if( 1 === $input->getOption('no-mail') ) {
+                $dest[] = 'snkrsheat@gmail.com';
+            }
+
             $message = (new \Swift_Message('Rapport de mise à jour des prix'))
             ->setFrom('report@sneaker.com')
-            ->setTo(['edouard.touraille@gmail.com', 'snkrsheat@gmail.com'])
+            ->setTo($dest)
             ->setBody(
                 $this->report->exportHTML(),
                 'text/html'

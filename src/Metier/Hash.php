@@ -12,10 +12,10 @@ namespace App\Metier;
 class Hash
 {
 
-    public static function make( $sizeAndPrice ) {
+    public static function make( $productAndVariant ) {
         $str = '';
-        foreach( $sizeAndPrice as $sizePrice ) {
-            $str.= $sizePrice['size'].$sizePrice['price'];
+        foreach( $productAndVariant['variants'] as $variant ) {
+            if(isset($variant['newPrice'])) $str.= (string ) $variant['newPrice'];
         }
         return md5($str);
     }

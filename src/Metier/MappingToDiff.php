@@ -42,10 +42,11 @@ class MappingToDiff implements \Iterator
             $redos = $em->getRepository(Redo::class)->findPending($redo);
             if( $redoEnd->check( $redo ) ) {
                 $redos = [];
-                $this->report->addLine("Les produits en exception se repètent s");
+                $this->report->addLine("Les produits en exception se repètent plus de 5 fois");
             }
             foreach ( $redos as $redo ) {
-                $this->mappings[] = $em->getRepository(Mapping::class)->find( $redo->getMappingId());
+                $mapping = $em->getRepository(Mapping::class)->find( $redo->getMappingId());
+                if( $mapping ) $this->mappings[] = $mapping;
             }
         } else {
             $this->mappings = $this->em->getRepository(Mapping::class)->findAll();

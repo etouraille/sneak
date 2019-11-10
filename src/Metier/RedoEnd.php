@@ -28,10 +28,10 @@ class RedoEnd
 
         $periodicData = [];
         $redos = $this->em->getRepository(Redo::class )->findForPeriodChecker( $redo );
+
         foreach( $redos as $redo ) {
             $periodicData[] = $redo->getMappingId();
         }
-
         $n = PeriodChecker::check( $periodicData );
         if( $n && $n > 5 ) {
             $pendings = PeriodChecker::period( $periodicData );

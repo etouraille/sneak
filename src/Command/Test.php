@@ -35,15 +35,21 @@ class Test extends Command
 
     protected function configure()
     {
-
+        $this
+            ->addOption(
+                'no-mail',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Redo hash',
+                1
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $res = [1, 2, 3 , 4, 1, 2 , 3];
-        dump(PeriodChecker::check($res));
-
+        var_dump( $input->getOption('no-mail'));
 
     }
 }

@@ -39,30 +39,30 @@ class DifftoPrice
             // abort
             $this->report->addLine(sprintf("Le produit %s n'est pas traité : problème lors du mapping sur stockx", $mapping->getShopifyUrl()), true  );
         }
-        $md5 = Hash::make($diff['sizePrice']);
+        $productAndVariant = $diff['productAndVariant'];
+        $sizeAndPrice = $diff['sizePrice'];
+        $error = [];
+        $this->setNewPrice($sizeAndPrice , $productAndVariant, $error);
+        $countNotIsset = 0;
+        $updated = 0;
+
+        foreach( $productAndVariant['variants'] as $i => $variant ) {
+            if(isset( $variant['dollard' ])) {
+                $productAndVariant['variants'][$i]['newPrice'] = Rate::apply( $this->converter->toEuro($variant['dollard']));
+                $updated ++;
+            } else {
+                $countNotIsset ++;
+            }
+        }
+        if(count($productAndVariant['variants']) > 0 && count( $productAndVariant['variants']) === $countNotIsset ) {
+            $this->report->addLine(sprintf('Aucun nouveau prix pour l url %s', $mapping->getShopifyUrl()), true );
+        }
+        if(count( $productAndVariant['variants']) === 0 ) {
+            $this->report->addLine(sprintf("Aucun variant pour %s", $productAndVariant['handle']), true );
+        }
+        $md5 = Hash::make($diff['productAndVariant']);
         if($md5 !== $mapping->getHashOldPriceAndSize()) {
             // update price
-            $productAndVariant = $diff['productAndVariant'];
-            $sizeAndPrice = $diff['sizePrice'];
-            $error = [];
-            $this->setNewPrice($sizeAndPrice , $productAndVariant, $error);
-            $countNotIsset = 0;
-            $updated = 0;
-
-            foreach( $productAndVariant['variants'] as $i => $variant ) {
-                if(isset( $variant['dollard' ])) {
-                    $productAndVariant['variants'][$i]['newPrice'] = Rate::apply( $this->converter->toEuro($variant['dollard']));
-                    $updated ++;
-                } else {
-                    $countNotIsset ++;
-                }
-            }
-            if(count($productAndVariant['variants']) > 0 && count( $productAndVariant['variants']) === $countNotIsset ) {
-                $this->report->addLine(sprintf('Aucun nouveau prix pour l url %s', $mapping->getShopifyUrl()), true );
-            }
-            if(count( $productAndVariant['variants']) === 0 ) {
-                $this->report->addLine(sprintf("Aucun variant pour %s", $productAndVariant['handle']), true );
-            }
             $this->integrity->check($productAndVariant);
             $this->priceSetter->set($productAndVariant);
             $this->report->addLine(sprintf("Mise a jour de %s prix pour %s", $updated, $productAndVariant['handle']));
