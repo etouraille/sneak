@@ -60,7 +60,7 @@ class DifftoPrice
         if(count( $productAndVariant['variants']) === 0 ) {
             $this->report->addLine(sprintf("Aucun variant pour %s", $productAndVariant['handle']), true );
         }
-        $md5 = Hash::make($diff['productAndVariant']);
+        $md5 = Hash::make($productAndVariant);
         if($md5 !== $mapping->getHashOldPriceAndSize()) {
             // update price
             $this->integrity->check($productAndVariant);
