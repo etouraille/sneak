@@ -12,7 +12,7 @@ namespace App\Metier;
 class Rate
 {
     public static function apply( $value ) {
-        //(x + 35% + 15) + 26%
+        //(x + 2% + 15) + 26%
         $x = 1.02 * (float) $value + 15;
         $y = 1.26 * $x;
         $ret = $y;

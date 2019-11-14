@@ -48,7 +48,7 @@ class DifftoPrice
 
         foreach( $productAndVariant['variants'] as $i => $variant ) {
             if(isset( $variant['dollard' ])) {
-                $productAndVariant['variants'][$i]['newPrice'] = Rate::apply( $this->converter->toEuro($variant['dollard']));
+                $productAndVariant['variants'][$i]['newPrice'] = Rate::apply( $variant['dollard'] );
                 $updated ++;
             } else {
                 $countNotIsset ++;

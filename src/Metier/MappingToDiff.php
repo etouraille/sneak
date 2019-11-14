@@ -131,7 +131,7 @@ class MappingToDiff implements \Iterator
         $this->counter->increment();
         $sizePrice = [];
         $crawler->filter('#market-summary > div.options > div > div > div.select-options > div:nth-child(2) > ul > li.select-option > div')->each(function( $node) use ( &$sizePrice , $url ) {
-            if(!preg_match('/([^ ]*)\$(.*)$/',$node->text(), $match )) {
+            if(!preg_match('/([^ ]*)\€(.*)$/',$node->text(), $match )) {
                 if(!preg_match('/Bid/', $node->text())) $this->report->addLine(sprintf ("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url , $node->text()));
             } else {
                 $sizePrice[] = ['size' => $match[1], 'price' => Dollard::removeComa($match[2])];
