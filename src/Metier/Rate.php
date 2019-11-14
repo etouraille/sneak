@@ -13,7 +13,7 @@ class Rate
 {
     public static function apply( $value ) {
         //(x + 35% + 15) + 26%
-        $x = 1.35 * (float) $value + 15;
+        $x = 1.02 * (float) $value + 15;
         $y = 1.26 * $x;
         $ret = $y;
         $ret = round( $ret, -1);

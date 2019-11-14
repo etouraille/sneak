@@ -36,7 +36,7 @@ class ProductParser
         }
         foreach($data['products'] as $product ) {
             $n++;
-            if($product['handle'] === $handle ) {
+            if(strtolower($product['handle']) === strtolower($handle) ) {
 
                 $break = true;
                 break;
