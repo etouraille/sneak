@@ -38,7 +38,7 @@ class CounterTest extends Command
     {
         $counter = new Counter();
         $n = $counter->read();
-        $use = $n>0?round((150000 - $n) / $n * 100, 2 ):0;
+        $use = $n>0?round( $n / (150000 ) * 100, 2 ):0;
         $content = sprintf("À mis-parcours mensuel, sneakers-heat est à %s %% de son utilisation de crawlera.", $use );
 
         $message = (new \Swift_Message("Rapport Sneakers-Heat d'utilisation de Crawlera"))
