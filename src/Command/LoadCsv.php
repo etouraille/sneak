@@ -26,7 +26,6 @@ class LoadCsv extends Command
 
     public function __construct( EntityManagerInterface $em ) {
         $this->em = $em;
-        $this->report = new Maker();
         parent::__construct();
     }
 

@@ -38,3 +38,25 @@ services:
       - MYSQL_PORT_3306_TCP_ADDR=db
      links:
       - db:mysql
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.4.2
+    volumes:
+      - ./pipeline/:/usr/share/logstash/pipeline/
+    ports:
+      - "12201:12201"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+
+
+  kibana:
+    image:  docker.elastic.co/kibana/kibana:7.4.2
+    links:
+      - elasticsearch
+    ports:
+      - "5601:5601"

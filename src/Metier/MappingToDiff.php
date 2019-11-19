@@ -131,11 +131,23 @@ class MappingToDiff implements \Iterator
         $this->counter->increment();
         $sizePrice = [];
         $crawler->filter('#market-summary > div.options > div > div > div.select-options > div:nth-child(2) > ul > li.select-option > div')->each(function( $node) use ( &$sizePrice , $url ) {
-            if(!preg_match('/([^ ]*)\€(.*)$/',$node->text(), $match )) {
-                if(!preg_match('/Bid/', $node->text())) $this->report->addLine(sprintf ("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url , $node->text()));
+            $res = [];
+            $node->filter('div')->each(function( $node) use( &$res ){
+                $res[]= $node->text();
+            });
+            //dump($res);
+            if(preg_match('/us ([^ ]*)$/i', $res[1], $match1) &&
+                preg_match('/^((.*)€)|([a-z]*)/i', $res[2], $match2)) {
+                $sizePrice[] = ['size' => $match1[1], 'price' => \App\Utils\Replace::replace($match2[2])];
+                dump( $sizePrice);
             } else {
-                $sizePrice[] = ['size' => $match[1], 'price' => Dollard::removeComa($match[2])];
+                //dump( $node->text());
+                if (!preg_match('/([^ ]*)\€(.*)$/', $node->text(), $match)) {
+                    if (!preg_match('/Bid/', $node->text())) $this->report->addLine(sprintf("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url, $node->text()));
+                } else {
+                    $sizePrice[] = ['size' => $match[1], 'price' => Dollard::removeComa($match[2])];
 
+                }
             }
         });
         if(count($sizePrice) === 0 ) $this->report->addLine(sprintf('Problème lors du parsage des prix de Stockx pour %s', $url ));

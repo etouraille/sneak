@@ -98,6 +98,8 @@ class DifftoPrice
 
     private function sizeEqualTitle( $size, $title ) {
         // size : US 12
+        //dump($size);
+        //dump($title);
         if(!preg_match('/([0-9\.,;]*)/i', $size , $match )) {
             throw new \Exception( 'Problème de match 1');
         }
