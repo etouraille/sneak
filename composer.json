@@ -9,7 +9,6 @@
         "ext-json": "^1.6",
         "curl/curl": "^2.2",
         "fabpot/goutte": "^3.2",
-        "graylog2/gelf-php": "^1.6",
         "jonnyw/php-phantomjs": "@dev",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.3.*",
@@ -34,6 +33,7 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "graylog2/gelf-php": "^1.6",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
