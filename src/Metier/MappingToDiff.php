@@ -139,7 +139,6 @@ class MappingToDiff implements \Iterator
             if(preg_match('/us ([^ ]*)$/i', $res[1], $match1) &&
                 preg_match('/^((.*)€)|([a-z]*)/i', $res[2], $match2)) {
                 $sizePrice[] = ['size' => $match1[1], 'price' => \App\Utils\Replace::replace($match2[2])];
-                dump( $sizePrice);
             } else {
                 //dump( $node->text());
                 if (!preg_match('/([^ ]*)\€(.*)$/', $node->text(), $match)) {
