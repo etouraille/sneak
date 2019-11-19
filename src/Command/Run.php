@@ -34,11 +34,11 @@ class Run extends Command
     private $logger;
 
 
-    public function __construct( EntityManagerInterface $em, \Swift_Mailer $mailer, LoggerInterface $shopifyLogger  ) {
+    public function __construct( EntityManagerInterface $em, \Swift_Mailer $mailer, LoggerInterface $appLogger  ) {
         $this->em = $em;
-        $this->report = new Maker();
+        $this->report = new Maker($appLogger);
         $this->mailer = $mailer;
-        $this->logger = $shopifyLogger;
+        $this->logger = $appLogger;
         parent::__construct();
     }
 

@@ -102,6 +102,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "graylog2/gelf-php": {
+        "version": "1.6.3"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.4.1"
     },
@@ -128,6 +131,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.3.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"

@@ -21,3 +21,10 @@ monolog:
             handler: deprecation
             max_level: info
             channels: ["php"]
+        gelf:
+            type: gelf
+            publisher:
+                hostname: 'logstash'
+                port: '12201'
+            level: info
+

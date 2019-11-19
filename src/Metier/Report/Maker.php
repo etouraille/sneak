@@ -9,17 +9,21 @@
 namespace App\Metier\Report;
 
 
+use Psr\Log\LoggerInterface;
+
 class Maker
 {
 
     private $lines = [];
+    private $logger;
 
-    public function __construct() {
-
+    public function __construct(LoggerInterface $appLogger ) {
+        $this->logger = $appLogger;
     }
 
     public function addLine( $line, $exception = false ) {
         $this->lines[] = $line;
+        $this->logger->info($line);
         echo $line . "\n";
         if( $exception ) {
             throw new \Exception(sprintf('Error %s', $line ));

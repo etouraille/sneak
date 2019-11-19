@@ -58,6 +58,39 @@ services:
       - "web"
       - "default"
 
+ logstash:
+   image: docker.elastic.co/logstash/logstash:7.4.2
+   volumes:
+   - ./pipeline/:/usr/share/logstash/pipeline/
+   ports:
+   - "12201:12201"
+
+ elasticsearch:
+     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+     ports:
+     - "9200:9200"
+     environment:
+     - discovery.type=single-node
+
+
+ kibana:
+     image:  docker.elastic.co/kibana/kibana:7.4.2
+     links:
+     - elasticsearch
+     ports:
+     - "5601:5601"
+     labels:
+     - "traefik.backend=kibana"
+     - "traefik.frontend.rule=Host:kibana.sneakers-heat.com"
+     - "traefik.enable=true"
+     - "traefik.port=5601"
+     - "traefik.docker.network=web"
+     networks:
+     - "web"
+     - "default"
+
+
+
 networks:
   web:
     external:
