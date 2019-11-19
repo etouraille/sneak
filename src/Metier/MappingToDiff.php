@@ -135,10 +135,10 @@ class MappingToDiff implements \Iterator
             $node->filter('div')->each(function( $node) use( &$res ){
                 $res[]= $node->text();
             });
-            //dump($res);
             if(preg_match('/us ([^ ]*)$/i', $res[1], $match1) &&
-                preg_match('/^((.*)€)|([a-z]*)/i', $res[2], $match2)) {
-                $sizePrice[] = ['size' => $match1[1], 'price' => \App\Utils\Replace::replace($match2[2])];
+                preg_match('/^€([^€]*)$/i', $res[2], $match2)) {
+                $sizePrice[] = ['size' => $match1[1], 'price' => \App\Utils\Replace::replace($match2[1])];
+                //dump($sizePrice);
             } else {
                 //dump( $node->text());
                 if (!preg_match('/([^ ]*)\€(.*)$/', $node->text(), $match)) {
