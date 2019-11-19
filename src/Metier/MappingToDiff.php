@@ -137,7 +137,7 @@ class MappingToDiff implements \Iterator
             });
             if(preg_match('/us ([^ ]*)$/i', $res[1], $match1) &&
                 preg_match('/^€([^€]*)$/i', $res[2], $match2)) {
-                $sizePrice[] = ['size' => $match1[1], 'price' => \App\Utils\Replace::replace($match2[1])];
+                $sizePrice[] = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
                 //dump($sizePrice);
             } else {
                 //dump( $node->text());
