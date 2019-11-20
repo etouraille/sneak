@@ -35,15 +35,19 @@ class SetNewPrice
 
                 $delta = (float) $variant['newPrice'] - (float) $variant['price'];
                 $n ++;
-                $response = VariantSetter::set([
+                $res = [
                     'variant' => [
                         'id' => $variant['id'],
                         'price' => $variant['newPrice']
                     ]
-                ]);
+                ];
+                if(isset($variant['inventory_quantity'])) {
+                    $res['variant']['inventory_quantity'] = $variant['inventory_quantity'];
+                }
+                $response = VariantSetter::set($res);
                 $data = json_decode($response , true );
                 if(!isset($data['variant'])) {
-                    $this->logger->addLine(sprintf("Problème d'écriture sur stockx : %s", $response), true );
+                    $this->logger->error(sprintf("Problème d'écriture sur stockx : %s", $response), true );
                 }
                 $this->report->addLine(sprintf('Mise à jour pour %s,%s de %s Euros à %s Euros', $productAndVariant['handle'], $variant['title'], $variant['price'], $variant['newPrice']));
             }

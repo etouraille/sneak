@@ -12,6 +12,7 @@ use App\Entity\Mapping;
 use App\Metier\PeriodChecker;
 use App\Metier\Proxy\FreshFactory;
 use App\Metier\Proxy\Load;
+use App\Metier\SetInventory;
 use App\Metier\SizeAndPrice\Parser;
 use App\Metier\VariantSetter;
 use App\Utils\Counter;
@@ -49,7 +50,7 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        var_dump( $input->getOption('no-mail'));
-
+        $inventory = new SetInventory();
+        $inventory->set(18861820477509, 0);
     }
 }

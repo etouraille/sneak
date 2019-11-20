@@ -42,6 +42,17 @@ class MappingRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOneByStockxUrlOrShopifyUrl( $url ) {
+        return $this->createQueryBuilder('m')
+            ->where('m.stockxUrl = :url')
+            ->orWhere('m.shopifyUrl = :url')
+            ->setParameter(':url', $url )
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
     public function search( $term ) {
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'DESC')

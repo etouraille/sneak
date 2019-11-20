@@ -91,7 +91,8 @@ class DifftoPrice
                     $productAndVariant['variants'][$i]['dollard'] = $sp['price'];
                 }
                 else {
-                    $this->report->addLine(sprintf("Le variant %s dans %s n'a pas de correspondant sur stockx", $variant['id'], $productAndVariant['handle']));
+                    $this->report->addLine(sprintf("Le variant %s dans %s n'a pas de correspondant sur stockx on fixe sa quantité à zero", $variant['id'], $productAndVariant['handle']));
+                    $response = SetInventory::null($productAndVariant['variants'][$i]['id']);
                 }
             }
     }

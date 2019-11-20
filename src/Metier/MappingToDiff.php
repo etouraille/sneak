@@ -89,7 +89,7 @@ class MappingToDiff implements \Iterator
     }
 
     public function one( $stockxUrl ) {
-        $match = $this->em->getRepository(Mapping::class )->findOneByStockxUrl( $stockxUrl );
+        $match = $this->em->getRepository(Mapping::class )->findOneByStockxUrlOrShopifyUrl( $stockxUrl );
         $ret = null;
         echo '.';
         if( $match ) {
