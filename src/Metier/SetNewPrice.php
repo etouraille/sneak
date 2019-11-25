@@ -47,7 +47,8 @@ class SetNewPrice
                 $response = VariantSetter::set($res);
                 $data = json_decode($response , true );
                 if(!isset($data['variant'])) {
-                    $this->logger->error(sprintf("Problème d'écriture sur stockx : %s", $response), true );
+                    $this->logger->error(sprintf("Problème d'écriture sur stockx : %s", $response), []);
+                    $this->report->addLine(sprintf("Problème décriture du prix %s", $response), true );
                 }
                 $this->report->addLine(sprintf('Mise à jour pour %s,%s de %s Euros à %s Euros', $productAndVariant['handle'], $variant['title'], $variant['price'], $variant['newPrice']));
             }
