@@ -137,8 +137,6 @@ class MappingToDiff implements \Iterator
                 $res[]= $node->text();
                 //dump($node->text());
             });
-            dump($res[1]);
-            dump($res[2]);
             if(preg_match('/us ([0-9;,.]*)/i', $res[1], $match1) &&
                 preg_match('/^€([^€]*)$/i', $res[2], $match2)) {
                 $sizePrice[] = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
