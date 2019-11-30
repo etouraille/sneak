@@ -131,18 +131,31 @@ class MappingToDiff implements \Iterator
         $this->counter->increment();
         $sizePrice = [];
         $crawler->filter('#market-summary > div.options > div > div > div.select-options > div:nth-child(2) > ul > li.select-option > div')->each(function( $node) use ( &$sizePrice , $url ) {
+            //dump($node->text());
             $res = [];
             $node->filter('div')->each(function( $node) use( &$res ){
                 $res[]= $node->text();
+                //dump($node->text());
             });
-            if(preg_match('/us ([^ ]*)$/i', $res[1], $match1) &&
+            dump($res[1]);
+            dump($res[2]);
+            if(preg_match('/us ([0-9;,.]*)/i', $res[1], $match1) &&
                 preg_match('/^€([^€]*)$/i', $res[2], $match2)) {
                 $sizePrice[] = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
-                //dump($sizePrice);
+
+            } else if(preg_match('/us ([0-9;,.]*)W$/i', $res[1], $match1)
+                && preg_match('/([0-9.;,]*)/i', $res[2], $match2)
+            ) {
+                if(preg_match('/Offre/', $res[2])) $this->report->addLine(sprintf("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url, $node->text()));
+                else $sizePrice[] = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
+
+                //dump($sizePrice);()
             } else {
                 //dump( $node->text());
                 if (!preg_match('/([^ ]*)\€(.*)$/', $node->text(), $match)) {
+
                     if (!preg_match('/Bid/', $node->text())) $this->report->addLine(sprintf("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url, $node->text()));
+                    if (!preg_match('/Offre/', $node->text())) $this->report->addLine(sprintf("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url, $node->text()));
                 } else {
                     $sizePrice[] = ['size' => $match[1], 'price' => Dollard::removeComa($match[2])];
 

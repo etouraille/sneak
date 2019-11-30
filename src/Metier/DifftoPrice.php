@@ -66,9 +66,9 @@ class DifftoPrice
             $this->integrity->check($productAndVariant);
             $this->priceSetter->set($productAndVariant);
             $this->report->addLine(sprintf("Mise a jour de %s prix pour %s", $updated, $productAndVariant['handle']));
-            $mapping->setHashOldPriceAndSize( $md5 );
-            $this->em->merge($mapping);
-            $this->em->flush();
+            //$mapping->setHashOldPriceAndSize( $md5 );
+            //$this->em->merge($mapping);
+            //$this->em->flush();
 
         } else {
             $this->report->addLine(sprintf("Le produit %s n'est pas traité, pas de variation de prix constatée", $mapping->getShopifyUrl()));
