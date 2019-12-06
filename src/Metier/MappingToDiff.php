@@ -135,7 +135,6 @@ class MappingToDiff implements \Iterator
             $res = [];
             $node->filter('div')->each(function( $node) use( &$res ){
                 $res[]= $node->text();
-                //dump($node->text());
             });
             if(preg_match('/us ([0-9;,.]*)/i', $res[1], $match1) &&
                 preg_match('/^€([^€]*)$/i', $res[2], $match2)) {
@@ -147,6 +146,11 @@ class MappingToDiff implements \Iterator
                 if(preg_match('/Offre/', $res[2])) $this->report->addLine(sprintf("Problème lors de la reconnaissance des prix pour %s sur la chaine %s", $url, $node->text()));
                 else $sizePrice[] = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
                 //dump($sizePrice);()
+            } else if (preg_match('/us ([0-9;,.]*)$/i', $res[1], $match1)
+                && preg_match('/([0-9.;,  ]*) €/i', $res[2], $match2)) {
+                $ret = ['size' => $match1[1], 'price' => Dollard::removeComa(\App\Utils\Replace::replace($match2[1]))];
+                $sizePrice[] = $ret;
+
             } else {
                 //dump( $node->text());
                 if (!preg_match('/([^ ]*)\€(.*)$/', $node->text(), $match)) {

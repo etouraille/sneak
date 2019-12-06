@@ -79,7 +79,7 @@ class DifftoPrice
         foreach( $productAndVariant['variants'] as $i => $variant ) {
                 $title = $variant['title'];
                 $break = false;
-                foreach ($sizeAndPrice as $sp) {
+                foreach ( $sizeAndPrice as $sp ) {
                     $size = $sp['size'];
                     if ( $this->sizeEqualTitle( $size, $title) ) {
                         $break = true;
