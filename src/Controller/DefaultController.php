@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('default');
         }
 
-        $pagination = new Pagination(6, $n);
+        $pagination = new Pagination(100, $n);
         $pagination->page( $page );
 
         return $this->render('default/index.html.twig', [
@@ -76,7 +76,7 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('default');
         }
 
-        $pagination = new Pagination(6, $n);
+        $pagination = new Pagination(100, $n);
         $pagination->page( $page );
 
         return $this->render('default/index.html.twig', [
@@ -104,7 +104,7 @@ class DefaultController extends AbstractController
 
     private function getPagination($em) {
         $count = (int) $em->getRepository(Mapping::class )->count();
-        $perPage = 6;
+        $perPage = 100;
         $pages = ( $count - ($count % $perPage ))/ $perPage + 1;
         $pagination = [];
         for($i=1;$i<=$pages;$i++) {
