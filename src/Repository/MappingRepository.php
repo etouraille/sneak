@@ -31,7 +31,7 @@ class MappingRepository extends ServiceEntityRepository
     }
 
 
-    public function page($page = 1 , $perPage = 6 ): ?array
+    public function page($page = 1 , $perPage = 100 ): ?array
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'DESC')
